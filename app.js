@@ -5,7 +5,8 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const path = require('path');
+const AdminJS = require('adminjs');
+const AdminJSExpress = require('@adminjs/express');
 
 const logger = require('./utilities/logger');
 const config = require('./config/app');
@@ -27,6 +28,16 @@ const setup = async () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
+
+  // Set up adminJS
+  const adminJs = new AdminJS({
+    databases: [],
+    rootPath: `/${config.adminToken}`,
+  });
+  const router = AdminJSExpress.buildRouter(adminJs);
+
+  // Set up routes
+  app.use(adminJs.options.rootPath, router);
 
   // Set up error catching
   app.use((req, res, next) => {
