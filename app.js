@@ -7,9 +7,13 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const AdminJS = require('adminjs');
 const AdminJSExpress = require('@adminjs/express');
+const AdminJSMongoose = require('@adminjs/mongoose');
 
+const GrantApplication = require('api.grants/modules/GrantApplication/GrantApplicationModel');
 const logger = require('./utilities/logger');
 const config = require('./config/app');
+
+AdminJS.registerAdapter(AdminJSMongoose);
 
 // Options
 const setup = async () => {
@@ -31,9 +35,11 @@ const setup = async () => {
 
   // Set up adminJS
   const adminJs = new AdminJS({
-    databases: [],
+    // databases: [mongoose],
     rootPath: `/${config.adminToken}`,
+    resources: [GrantApplication],
   });
+
   const router = AdminJSExpress.buildRouter(adminJs);
 
   // Set up routes
