@@ -37,7 +37,11 @@ const setup = async () => {
   const adminJs = new AdminJS({
     // databases: [mongoose],
     rootPath: `/${config.adminToken}`,
-    resources: [GrantApplication],
+    resources: [
+      {
+        resource: GrantApplication,
+      },
+    ],
     branding: {
       companyName: config.appName,
     },
