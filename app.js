@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const AdminJS = require('adminjs');
 const AdminJSExpress = require('@adminjs/express');
 const AdminJSMongoose = require('@adminjs/mongoose');
+const basicAuth = require('express-basic-auth');
 
 const GrantApplication = require('api.grants/modules/GrantApplication/GrantApplicationModel');
 const logger = require('./utilities/logger');
@@ -29,6 +30,14 @@ const setup = async () => {
 
   // Set up middlewares
   app.use(morgan('dev'));
+
+  app.use(
+    basicAuth({
+      users: { [config.adminLogin]: config.adminPassword },
+      challenge: true,
+    }),
+  );
+
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());

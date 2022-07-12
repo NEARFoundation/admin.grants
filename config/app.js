@@ -3,6 +3,8 @@ const config = {
   mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/fund3r',
   appName: process.env.APP_NAME || 'FUND3R',
   adminToken: process.env.ADMIN_TOKEN || 'admin',
+  adminLogin: process.env.ADMIN_LOGIN || 'admin',
+  adminPassword: process.env.ADMIN_PASSWORD || 'supersecret',
 };
 
 module.exports = config;
