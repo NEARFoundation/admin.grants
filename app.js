@@ -10,7 +10,7 @@ const AdminJSExpress = require('@adminjs/express');
 const AdminJSMongoose = require('@adminjs/mongoose');
 const basicAuth = require('express-basic-auth');
 
-const GrantApplication = require('api.grants/modules/GrantApplication/GrantApplicationModel');
+const grantApplication = require('./resources/GrantApplication');
 const logger = require('./utilities/logger');
 const config = require('./config/app');
 
@@ -44,13 +44,8 @@ const setup = async () => {
 
   // Set up adminJS
   const adminJs = new AdminJS({
-    // databases: [mongoose],
     rootPath: `/${config.adminToken}`,
-    resources: [
-      {
-        resource: GrantApplication,
-      },
-    ],
+    resources: [grantApplication],
     branding: {
       companyName: config.appName,
     },
