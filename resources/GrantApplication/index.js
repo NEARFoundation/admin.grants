@@ -23,6 +23,23 @@ const grantApplication = {
         },
         component: AdminJS.bundle('./signature.component'),
       },
+      showInvoices: {
+        icon: 'DocumentAttachment',
+        actionType: 'record',
+        handler: (request, response, context) => {
+          const { record } = context;
+
+          record.params.config = {
+            backendAdminToken: config.backendAdminToken,
+            backendHost: config.backendHost,
+          };
+
+          return {
+            record: record.toJSON(),
+          };
+        },
+        component: AdminJS.bundle('./invoices.component'),
+      },
     },
   },
 };

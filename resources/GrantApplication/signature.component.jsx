@@ -1,5 +1,3 @@
-import { Box } from '@adminjs/design-system';
-
 const Signature = (props) => {
   const { record } = props;
 
