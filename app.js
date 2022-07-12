@@ -38,6 +38,9 @@ const setup = async () => {
     // databases: [mongoose],
     rootPath: `/${config.adminToken}`,
     resources: [GrantApplication],
+    branding: {
+      companyName: config.appName,
+    },
   });
 
   const router = AdminJSExpress.buildRouter(adminJs);
