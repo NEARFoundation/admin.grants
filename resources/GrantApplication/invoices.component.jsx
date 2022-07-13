@@ -1,6 +1,10 @@
 const Invoices = (props) => {
   const { record } = props;
 
+  if (!record.params.config) {
+    window.location.reload();
+  }
+
   const urlPreffix =
     record.params.config.backendHost + '/admin/' + record.params.config.backendAdminToken + '/accounts/' + record.params.nearId + '/grants/' + record.params.id + '/invoices';
 

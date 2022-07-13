@@ -1,6 +1,10 @@
 const Signature = (props) => {
   const { record } = props;
 
+  if (!record.params.config) {
+    window.location.reload();
+  }
+
   const url =
     record.params.config.backendHost +
     '/admin/' +
