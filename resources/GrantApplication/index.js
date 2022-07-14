@@ -30,6 +30,11 @@ const grantApplication = {
           };
         },
         component: false,
+        isVisible: (context) =>
+          context.record.params.dateSubmission &&
+          context.record.params.dateEvaluation &&
+          context.record.params.dateInterviewScheduled &&
+          !context.record.params.dateInterviewCompletionConfirmation,
       },
       rejectAfterInterview: {
         icon: 'Close',
@@ -55,6 +60,11 @@ const grantApplication = {
           };
         },
         component: false,
+        isVisible: (context) =>
+          context.record.params.dateSubmission &&
+          context.record.params.dateEvaluation &&
+          context.record.params.dateInterviewScheduled &&
+          !context.record.params.dateInterviewCompletionConfirmation,
       },
       approveMilestone: {
         icon: 'Checkmark',
@@ -132,6 +142,7 @@ const grantApplication = {
           };
         },
         component: AdminJS.bundle('./signature.component'),
+        isVisible: (context) => context.record.params.dateKycApproved && !context.record.params.dateAgreementSignatureGrantGiver,
       },
       showInvoices: {
         icon: 'DocumentAttachment',
@@ -149,6 +160,7 @@ const grantApplication = {
           };
         },
         component: AdminJS.bundle('./invoices.component'),
+        isVisible: (context) => context.record.params.isNearProposalValid,
       },
     },
   },
