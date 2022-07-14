@@ -6,6 +6,56 @@ const grantApplication = {
   resource: GrantApplication,
   options: {
     actions: {
+      approveAfterInterview: {
+        icon: 'Checkmark',
+        actionType: 'record',
+        handler: async (request, response, context) => {
+          const { record } = context;
+
+          const grantApplicationObject = await GrantApplication.findOne({
+            // eslint-disable-next-line no-underscore-dangle
+            _id: record.params._id,
+          });
+
+          grantApplicationObject.dateInterviewCompletionConfirmation = new Date();
+          grantApplicationObject.dateApproval = new Date();
+
+          record.params.dateInterviewCompletionConfirmation = grantApplicationObject.dateInterviewCompletionConfirmation;
+          record.params.dateApproval = grantApplicationObject.dateApproval;
+
+          await grantApplicationObject.save();
+
+          return {
+            record: record.toJSON(),
+          };
+        },
+        component: false,
+      },
+      rejectAfterInterview: {
+        icon: 'Close',
+        actionType: 'record',
+        handler: async (request, response, context) => {
+          const { record } = context;
+
+          const grantApplicationObject = await GrantApplication.findOne({
+            // eslint-disable-next-line no-underscore-dangle
+            _id: record.params._id,
+          });
+
+          grantApplicationObject.dateInterviewCompletionConfirmation = new Date();
+          grantApplicationObject.dateDenial = new Date();
+
+          record.params.dateInterviewCompletionConfirmation = grantApplicationObject.dateInterviewCompletionConfirmation;
+          record.params.dateDenial = grantApplicationObject.dateDenial;
+
+          await grantApplicationObject.save();
+
+          return {
+            record: record.toJSON(),
+          };
+        },
+        component: false,
+      },
       signAgreement: {
         icon: 'DocumentSigned',
         actionType: 'record',
