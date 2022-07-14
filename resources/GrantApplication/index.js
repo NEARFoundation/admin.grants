@@ -1,6 +1,7 @@
 const AdminJS = require('adminjs');
 const GrantApplication = require('api.grants/modules/GrantApplication/GrantApplicationModel');
 const config = require('../../config/app');
+const isMilestoneVisible = require('./isMilestoneVisible');
 
 const grantApplication = {
   resource: GrantApplication,
@@ -95,6 +96,7 @@ const grantApplication = {
           };
         },
         component: false,
+        isVisible: isMilestoneVisible,
       },
       rejectMilestone: {
         icon: 'Close',
@@ -125,6 +127,7 @@ const grantApplication = {
           };
         },
         component: false,
+        isVisible: isMilestoneVisible,
       },
       signAgreement: {
         icon: 'DocumentSigned',
