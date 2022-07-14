@@ -86,8 +86,36 @@ const grantApplication = {
         },
         component: false,
       },
-      // rejectMilestone: {
-      // },
+      rejectMilestone: {
+        icon: 'Close',
+        actionType: 'record',
+        handler: async (request, response, context) => {
+          const { record } = context;
+
+          const grantApplicationObject = await GrantApplication.findOne({
+            // eslint-disable-next-line no-underscore-dangle
+            _id: record.params._id,
+          });
+
+          const currentMilestone = grantApplicationObject.milestones.find(
+            (milestone) => milestone.dateSubmission && milestone.isNearProposalValid && milestone.dateInterviewScheduled && !(milestone.dateRejection || milestone.dateValidation),
+          );
+
+          const index = grantApplicationObject.milestones.indexOf(currentMilestone);
+
+          if (currentMilestone) {
+            currentMilestone.dateRejection = new Date();
+            record.params[`milestones.${index}.dateRejection`] = new Date();
+
+            await grantApplicationObject.save();
+          }
+
+          return {
+            record: record.toJSON(),
+          };
+        },
+        component: false,
+      },
       signAgreement: {
         icon: 'DocumentSigned',
         actionType: 'record',
